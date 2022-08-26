@@ -6,7 +6,7 @@
 // @match       https://dl-protect.info/*
 // @match       https://www.tirexo.*/*
 // @grant       none
-// @version     2.2
+// @version     2.2.1
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto
@@ -29,7 +29,7 @@ function getRidOfShit() {
 
 if (window.location.toString().includes('protect')) {  
       
-
+console.log('hey')
   
     window.onload = () => {
       

@@ -29,7 +29,6 @@ function getRidOfShit() {
 
 if (window.location.toString().includes('protect')) {  
       
-console.log('hey')
   
     window.onload = () => {
       

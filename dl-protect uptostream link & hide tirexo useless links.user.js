@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name        dl-protect uptostream link & hide tirexo useless links
 // @namespace   Violentmonkey Scripts
+// @downloadURL https://raw.githubusercontent.com/WeLiveInASausage/violentmonkey_Scripts/main/dl-protect%20uptostream%20link%20%26%20hide%20tirexo%20useless%20links.user.js?token=GHSAT0AAAAAABYCN5FXTTGLA3WJ7QQCVY3SYYI362A
 // @icon        https://i.ibb.co/MNg7Q8v/Sans-titre-1-1.png
 // @match       https://dl-protect.info/*
 // @match       https://www.tirexo.*/*

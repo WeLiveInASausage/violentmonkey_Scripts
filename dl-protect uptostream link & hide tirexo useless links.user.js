@@ -5,7 +5,7 @@
 // @match       https://dl-protect.info/*
 // @match       https://www.tirexo.*/*
 // @grant       none
-// @version     2.1
+// @version     2.2
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto

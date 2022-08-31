@@ -1,12 +1,11 @@
 // ==UserScript==
 // @name        dl-protect uptostream link & hide tirexo useless links
-// @namespace   Violentmonkey Scripts
+// @namespace   https://github.com/WeLiveInASausage/violentmonkey_Scripts
 // @downloadURL https://raw.githubusercontent.com/WeLiveInASausage/violentmonkey_Scripts/main/dl-protect%20uptostream%20link%20%26%20hide%20tirexo%20useless%20links.user.js
 // @icon        https://i.ibb.co/MNg7Q8v/Sans-titre-1-1.png
 // @match       https://dl-protect.info/*
 // @match       https://www.tirexo.*/*
-// @grant       none
-// @version     2.3
+// @version     2.4
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto
@@ -32,14 +31,34 @@ if (window.location.toString().includes('protect')) {
   
     window.onload = () => {
       
+      document.getElementsByTagName("h1")[0].innerText = "Your Uptostream link is generating"
+      document.getElementsByTagName("p")[0].innerText = "thanks for waiting, have a nice day !"
+      
       // cleaning HTML of some unwanted shit.
-      document.querySelector('center > b > p').remove()
-      document.querySelector('span.amigo').remove()
-      document.querySelector('footer').remove()
+      let style =
+          `
+          body {
+              background: #1c1c1c ! important;
+          }
+          
+          .amigo, footer {
+              display: none !important;
+          }
+          
+          h3 {
+              color: #b7b7b7 !important;
+          }
+          
+          .col-md-12.urls.text-center {
+              background: #262626 !important;
+              border: 1px solid #484848 !important;
+          }
+          
+          `
+      GM_addStyle(style);
       getRidOfShit()
 
       if(document.querySelector('.g-recaptcha')){
-        console.log('EXIST')
         document.querySelector('.g-recaptcha').dispatchEvent(new Event("submit"));
       }
           
@@ -70,7 +89,6 @@ if (window.location.toString().includes('protect')) {
       
         if (document.querySelector('#protected-container')) {
 
-          console.log('Inside if')
             let link = document.querySelector('.col-md-12 > ul:nth-child(1) > li:nth-child(1) > a:nth-child(1)');
 
             // replace uptobox link by uptostream link then clear interval
@@ -146,7 +164,7 @@ if (window.location.toString().includes('tirexo')) {
 
         //-------------Remove useless elements -----------------
         const menuCategory = document.querySelectorAll('div.card')
-        console.log(menuCategory)
+
         for (i = 0; i < menuCategory.length; i++) {
             menuCategory[5].style.display = 'none';
             menuCategory[7].style.display = 'none';
@@ -202,7 +220,6 @@ if (window.location.toString().includes('tirexo')) {
 
             const episodes = bArray.filter(el => el.innerText.includes('Episode'))
             const maxEp = Math.max(...episodes.map(el => el.innerText.replaceAll(/[a-zA-Z!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/g, "").trim()))
-            console.log(maxEp)
 
             let finalArray = [];
 
@@ -221,7 +238,6 @@ if (window.location.toString().includes('tirexo')) {
                         count += 1
                     }
                 }
-                console.log('yo')
             })
 
             for (i = 0; i < finalArray.length; i++) {

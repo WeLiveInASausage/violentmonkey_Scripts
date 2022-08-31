@@ -5,7 +5,7 @@
 // @icon        https://i.ibb.co/MNg7Q8v/Sans-titre-1-1.png
 // @match       https://dl-protect.info/*
 // @match       https://www.tirexo.*/*
-// @version     2.4
+// @version     2.5
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto

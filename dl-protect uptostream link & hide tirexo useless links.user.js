@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        dl-protect uptostream link & hide tirexo useless links
+// @name        Direct to Uptostream
 // @namespace   https://github.com/WeLiveInASausage/violentmonkey_Scripts
 // @downloadURL https://raw.githubusercontent.com/WeLiveInASausage/violentmonkey_Scripts/main/dl-protect%20uptostream%20link%20%26%20hide%20tirexo%20useless%20links.user.js
 // @icon        https://i.ibb.co/MNg7Q8v/Sans-titre-1-1.png
@@ -9,8 +9,7 @@
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto
-// @run-at      none
-// @description 12/07/2022 18:30:48
+// @description Purges the list of tirexo links to display only uptobox links and automates the DL-protect process
 // ==/UserScript==
 
 function getRidOfShit() {

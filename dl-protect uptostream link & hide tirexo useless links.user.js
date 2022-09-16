@@ -5,7 +5,7 @@
 // @icon        https://i.ibb.co/MNg7Q8v/Sans-titre-1-1.png
 // @match       https://dl-protect.info/*
 // @match       https://www.tirexo.*/*
-// @version     2.5
+// @version     2.6
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto
@@ -25,46 +25,48 @@ function getRidOfShit() {
 
 //--------------------------------------dl-protect----------------------------------------
 
-if (window.location.toString().includes('protect')) {  
-      
-  
-    window.onload = () => {
-      
+if (window.location.toString().includes('protect')) {
+
+
+
+
+    //window.onload = () => {
+
       document.getElementsByTagName("h1")[0].innerText = "Your Uptostream link is generating"
       document.getElementsByTagName("p")[0].innerText = "thanks for waiting, have a nice day !"
-      
+
       // cleaning HTML of some unwanted shit.
       let style =
           `
           body {
               background: #1c1c1c ! important;
           }
-          
+
           .amigo, footer {
               display: none !important;
           }
-          
+
           h3 {
               color: #b7b7b7 !important;
           }
-          
+
           .col-md-12.urls.text-center {
               background: #262626 !important;
               border: 1px solid #484848 !important;
           }
-          
+
           `
       GM_addStyle(style);
       getRidOfShit()
 
-      if(document.querySelector('.g-recaptcha')){
+      /*if(document.querySelector('.g-recaptcha')){
         document.querySelector('.g-recaptcha').dispatchEvent(new Event("submit"));
-      }
-          
-// If dl-protect "continue button" getting trouble to be auto clicked : delete lines ==> 11,12,33 then < 41 to 44 > and 100. Then decomment lines < 48 to 61 > and save
+      }*/
 
-  /*const body = document.querySelector('body')
-    
+// If dl-protect "continue button" getting trouble to be auto clicked
+
+  const body = document.querySelector('body')
+
     const mutationObserver = new MutationObserver(mutations => {
 
     console.log(mutations)
@@ -76,8 +78,8 @@ if (window.location.toString().includes('protect')) {
 
       }
     })
-    mutationObserver.observe(body, { childList: true, subtree: true }) */
-    
+    mutationObserver.observe(body, { childList: true, subtree: true })
+
 
     // div that contains uptobox link after validate button is clicked and/or captcha is resolved.
     //const div = document.querySelector('div.container:nth-child(3)')
@@ -85,7 +87,7 @@ if (window.location.toString().includes('protect')) {
 
     // each second check if div that contains uptobox link has been added into HTML by website's script.
     let zeparti = setInterval(() => {
-      
+
         if (document.querySelector('#protected-container')) {
 
             let link = document.querySelector('.col-md-12 > ul:nth-child(1) > li:nth-child(1) > a:nth-child(1)');
@@ -95,7 +97,7 @@ if (window.location.toString().includes('protect')) {
             link.innerText = link.href.replace('uptobox', 'uptostream');
             clearInterval(zeparti);
 
-            // check if uptobox link has been replaced by uptostream. As soon it's done, open it in a new tab, then clear interval.          
+            // check if uptobox link has been replaced by uptostream. As soon it's done, open it in a new tab, then clear interval.
             const openLink = setInterval(() => {
 
                 let checkOpen = false
@@ -118,7 +120,7 @@ if (window.location.toString().includes('protect')) {
         }
 
     }, 500);
-  }
+  //}
 }
 
 //-----------------------------------------------------------------------------------------------TIREXO----------------------------------------------------------------------------------

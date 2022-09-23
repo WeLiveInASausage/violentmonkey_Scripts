@@ -5,7 +5,7 @@
 // @icon        https://i.ibb.co/MNg7Q8v/Sans-titre-1-1.png
 // @match       https://dl-protect.info/*
 // @match       https://www.tirexo.*/*
-// @version     2.6
+// @version     2.7
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto
@@ -27,17 +27,14 @@ function getRidOfShit() {
 
 if (window.location.toString().includes('protect')) {
 
-
-
-
     //window.onload = () => {
 
-      document.getElementsByTagName("h1")[0].innerText = "Your Uptostream link is generating"
-      document.getElementsByTagName("p")[0].innerText = "thanks for waiting, have a nice day !"
+    document.getElementsByTagName("h1")[0].innerText = "Your Uptostream link is generating"
+    document.getElementsByTagName("p")[0].innerText = "thanks for waiting, have a nice day !"
 
-      // cleaning HTML of some unwanted shit.
-      let style =
-          `
+    // cleaning HTML of some unwanted shit.
+    let style =
+        `
           body {
               background: #1c1c1c ! important;
           }
@@ -55,35 +52,50 @@ if (window.location.toString().includes('protect')) {
               border: 1px solid #484848 !important;
           }
 
+          .g-recaptcha {
+              color: white;
+              padding: 10px 20px;
+              background: #0dabf9;
+              border-radius: 25px;
+              border: transparent;
+              box-shadow: 2px 2px 2px rgba(0,0,0,0.5);
+              font-weight: bold;
+          }
+
           `
-      GM_addStyle(style);
-      getRidOfShit()
-
-      /*if(document.querySelector('.g-recaptcha')){
-        document.querySelector('.g-recaptcha').dispatchEvent(new Event("submit"));
-      }*/
-
-// If dl-protect "continue button" getting trouble to be auto clicked
-
-  const body = document.querySelector('body')
-
-    const mutationObserver = new MutationObserver(mutations => {
-
-    console.log(mutations)
+    GM_addStyle(style);
+    getRidOfShit()
 
     if (document.querySelector('.g-recaptcha')) {
-        mutationObserver.disconnect();
-        console.log('EXIST')
-        document.querySelector('.g-recaptcha').dispatchEvent(new Event("submit"));
 
-      }
-    })
-    mutationObserver.observe(body, { childList: true, subtree: true })
+        setTimeout(() => {
+            document.querySelector('.g-recaptcha').dispatchEvent(new Event("submit"));
+        }, 500)
+
+
+    } else {
+
+        const body = document.querySelector('body')
+
+        const mutationObserver = new MutationObserver(mutations => {
+
+            console.log(mutations)
+
+            if (document.querySelector('.g-recaptcha')) {
+                mutationObserver.disconnect();
+                setTimeout(() => {
+                    document.querySelector('.g-recaptcha').dispatchEvent(new Event("submit"));
+                }, 500)
+
+            }
+        })
+        mutationObserver.observe(body, { childList: true, subtree: true })
+
+    }
 
 
     // div that contains uptobox link after validate button is clicked and/or captcha is resolved.
     //const div = document.querySelector('div.container:nth-child(3)')
-
 
     // each second check if div that contains uptobox link has been added into HTML by website's script.
     let zeparti = setInterval(() => {
@@ -120,7 +132,7 @@ if (window.location.toString().includes('protect')) {
         }
 
     }, 500);
-  //}
+    //}
 }
 
 //-----------------------------------------------------------------------------------------------TIREXO----------------------------------------------------------------------------------

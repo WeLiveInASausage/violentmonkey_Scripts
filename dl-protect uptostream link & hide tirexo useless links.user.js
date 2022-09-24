@@ -5,10 +5,10 @@
 // @icon        https://i.ibb.co/MNg7Q8v/Sans-titre-1-1.png
 // @match       https://dl-protect.info/*
 // @match       https://www.tirexo.*/*
-// @version     2.7
+// @version     2.8
 // @author      Jansen
 // @grant       GM_addStyle
-// @inject-into auto
+// @inject-into content
 // @description Purges the list of tirexo links to display only uptobox links and automates the DL-protect process
 // ==/UserScript==
 
@@ -16,16 +16,39 @@ function getRidOfShit() {
     setTimeout(() => {
         const shits = document.querySelectorAll('script')
         shits.forEach(shit => {
-            if (shit.src.includes('jywigigu') || shit.src.includes('ads') || shit.src.includes('fauxtitters') || shit.src.includes('stats') || shit.hasAttribute('data-cfasync')) {
+            if (shit.src.includes('jywigigu') || shit.src.includes('ads') || shit.src.includes('fauxtitters') || shit.src.includes('stats') || shit.src.includes('betzapdoson') || shit.hasAttribute('data-cfasync')) {
                 shit.remove()
             }
         })
+
+        if (document.querySelectorAll('.amigo')) {
+            const amigo = document.querySelectorAll('.amigo')
+            amigo.forEach(el => {
+                el.remove()
+            })
+        }
+
+        if (document.querySelectorAll('center')) {
+            const center = document.querySelectorAll('center')
+            center.forEach(el => {
+                if (document.querySelector('div.container:nth-child(2) > div:nth-child(1) > div:nth-child(1) > center:nth-child(1) > a:nth-child(2)')) {
+                    document.querySelector('div.container:nth-child(2) > div:nth-child(1) > div:nth-child(1) > center:nth-child(1) > a:nth-child(2)').remove()
+                }
+            })
+        }
     }, 500)
 }
 
 //--------------------------------------dl-protect----------------------------------------
 
 if (window.location.toString().includes('protect')) {
+
+    function addGif() {
+        const gif = document.createElement('div')
+        gif.setAttribute('class', 'gif')
+        document.querySelector('div.container:nth-child(3)').after(gif)
+        gif.innerHTML = '<img src="https://i.giphy.com/media/yziuK6WtDFMly/giphy.webp"  class="giphy-embed" allowFullScreen></img>'
+    }
 
     //window.onload = () => {
 
@@ -62,37 +85,54 @@ if (window.location.toString().includes('protect')) {
               font-weight: bold;
           }
 
+          .gif {
+              width: 75%;
+              min-height: 2vh;
+              margin: auto;
+          }
+
+          iframe.giphy-embed {
+              width: 100%;
+          }
+
+          .gif img {
+              display: block;
+              width: 100%;
+              height: auto;
+              max-width: 800px;
+              margin: auto;
+              box-shadow: 8px 8px 3px rgba(0,0,0,0.2);
+          }
+
           `
     GM_addStyle(style);
     getRidOfShit()
 
     if (document.querySelector('.g-recaptcha')) {
-
+        addGif()
         setTimeout(() => {
             document.querySelector('.g-recaptcha').dispatchEvent(new Event("submit"));
-        }, 500)
-
+        }, 800)
 
     } else {
 
         const body = document.querySelector('body')
-
         const mutationObserver = new MutationObserver(mutations => {
 
             console.log(mutations)
 
             if (document.querySelector('.g-recaptcha')) {
                 mutationObserver.disconnect();
+                addGif()
                 setTimeout(() => {
                     document.querySelector('.g-recaptcha').dispatchEvent(new Event("submit"));
-                }, 500)
+                }, 800)
 
             }
         })
         mutationObserver.observe(body, { childList: true, subtree: true })
 
     }
-
 
     // div that contains uptobox link after validate button is clicked and/or captcha is resolved.
     //const div = document.querySelector('div.container:nth-child(3)')

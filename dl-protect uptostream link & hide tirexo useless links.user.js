@@ -5,7 +5,7 @@
 // @icon        https://i.ibb.co/MNg7Q8v/Sans-titre-1-1.png
 // @match       https://dl-protect.info/*
 // @match       https://www.tirexo.*/*
-// @version     2.8
+// @version     2.9
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into content
@@ -44,10 +44,13 @@ function getRidOfShit() {
 if (window.location.toString().includes('protect')) {
 
     function addGif() {
+        const cover = window.location.toString().split('#').at(-1)
         const gif = document.createElement('div')
         gif.setAttribute('class', 'gif')
-        document.querySelector('div.container:nth-child(3)').after(gif)
-        gif.innerHTML = '<img src="https://i.giphy.com/media/yziuK6WtDFMly/giphy.webp"  class="giphy-embed" allowFullScreen></img>'
+        document.querySelectorAll('.row')[1].after(gif)
+        gif.innerHTML = '<img src=""  class="giphy-embed" allowFullScreen></img>'
+        document.querySelector('.gif img').src = cover
+        //gif.innerHTML = '<img src="https://i.giphy.com/media/yziuK6WtDFMly/giphy.webp"  class="giphy-embed" allowFullScreen></img>'
     }
 
     //window.onload = () => {
@@ -62,7 +65,20 @@ if (window.location.toString().includes('protect')) {
               background: #1c1c1c ! important;
           }
 
-          .amigo, footer {
+          .navbar-default {
+              background-color: #1c1c1c;
+              border-color: #333;
+          }
+
+          div.container:nth-child(2) > div:nth-child(1) > div:nth-child(1) > center:nth-child(1) > h3:nth-child(1) {
+              margin-top: 5px;
+          }
+
+          .row {
+              background: #1c1c1c;
+          }
+
+          .amigo, footer, .grecaptcha-badge {
               display: none !important;
           }
 
@@ -78,17 +94,25 @@ if (window.location.toString().includes('protect')) {
           .g-recaptcha {
               color: white;
               padding: 10px 20px;
-              background: #0dabf9;
-              border-radius: 25px;
+              background: #363a3c;
+              border-radius: 7px;
               border: transparent;
-              box-shadow: 2px 2px 2px rgba(0,0,0,0.5);
+              box-shadow: 4px 4px 2px rgba(0,0,0,0.2);
               font-weight: bold;
+              width: 78%;
+              min-width: 135px;
+              max-width: 430px;
+          }
+
+          .g-recaptcha:hover {
+              background: #3d4244;
           }
 
           .gif {
               width: 75%;
-              min-height: 2vh;
+              height: auto;
               margin: auto;
+              padding-top: 15px;
           }
 
           iframe.giphy-embed {
@@ -99,9 +123,39 @@ if (window.location.toString().includes('protect')) {
               display: block;
               width: 100%;
               height: auto;
-              max-width: 800px;
+              max-width: 430px;
+              min-width: 135px;
               margin: auto;
-              box-shadow: 8px 8px 3px rgba(0,0,0,0.2);
+              box-shadow: 7px 7px 3px rgba(0,0,0,0.2), -7px 7px 3px rgba(0,0,0,0.1);
+              border-radius: 7px;
+              margin-bottom: 15px;
+          }
+
+          #logo > img:nth-child(1) {
+              filter: grayscale(100%);
+          }
+
+          body > div:nth-child(8) > div:nth-child(2) {
+              position: fixed !important;
+              top: 120px !important;
+          }
+
+          .form-control-static {
+              min-height: 0px;
+          }
+
+          .form-group {
+              margin-bottom: 0;
+          }
+
+          div.col-sm-4:nth-child(2) {
+              width: 100%;
+          }
+
+          @media (max-width: 800px) {
+              #logo > img:nth-child(1) {
+              display: none;
+              }
           }
 
           `
@@ -109,7 +163,10 @@ if (window.location.toString().includes('protect')) {
     getRidOfShit()
 
     if (document.querySelector('.g-recaptcha')) {
-        addGif()
+
+        if (window.location.href.indexOf("#") > -1) {
+            addGif()
+        }
         setTimeout(() => {
             document.querySelector('.g-recaptcha').dispatchEvent(new Event("submit"));
         }, 800)
@@ -144,28 +201,32 @@ if (window.location.toString().includes('protect')) {
 
             let link = document.querySelector('.col-md-12 > ul:nth-child(1) > li:nth-child(1) > a:nth-child(1)');
 
-            // replace uptobox link by uptostream link then clear interval
-            link.href = link.href.replace('uptobox', 'uptostream');
-            link.innerText = link.href.replace('uptobox', 'uptostream');
-            clearInterval(zeparti);
+            if (link.href.includes("uptobox")) {
+                // replace uptobox link by uptostream link then clear interval
+                link.href = link.href.replace('uptobox', 'uptostream');
+                link.innerText = link.href.replace('uptobox', 'uptostream');
+                clearInterval(zeparti);
 
-            // check if uptobox link has been replaced by uptostream. As soon it's done, open it in a new tab, then clear interval.
-            const openLink = setInterval(() => {
+                // check if uptobox link has been replaced by uptostream. As soon it's done, open it in a new tab, then clear interval.
+                const openLink = setInterval(() => {
 
-                let checkOpen = false
+                    let checkOpen = false
 
-                if (link.href.includes('uptostream')) {
+                    if (link.href.includes('uptostream')) {
 
-                    /*window.open(link.href, '_self')*/
-                    window.open(link.href, '_blank', 'noopener')
-                    checkOpen = true
-                }
-                if (checkOpen) {
-                    clearInterval(openLink)
-                    window.close();
-                }
+                        /*window.open(link.href, '_self')*/
+                        window.open(link.href, '_blank', 'noopener')
+                        checkOpen = true
+                    }
+                    if (checkOpen) {
+                        clearInterval(openLink)
+                        window.close();
+                    }
 
-            }, 1000)
+                }, 1000)
+            }
+
+
 
         } else {
             console.log('waiting for the captcha to be resolved')
@@ -239,6 +300,8 @@ if (window.location.toString().includes('tirexo')) {
 
             //-------------Get only uptobox and 1fichier-----------
 
+            const cover = document.querySelector('.xfieldimage').src
+
             let finalArray = [];
 
             for (i = 0; i < bArray.length; i++) {
@@ -249,7 +312,7 @@ if (window.location.toString().includes('tirexo')) {
 
                     // replace anchor.href by onclick method so that the dl-protect tab can open uptostream on itself after the script execution is done.
                     let anchor = bArray[i + 1].innerHTML
-                    let link = anchor.substring(anchor.indexOf('https'), anchor.indexOf('>') - 1)
+                    let link = `${anchor.substring(anchor.indexOf('https'), anchor.indexOf('>') - 1)}#${cover}`
                     bArray[i + 1].innerHTML = `<a href="#" onclick="window.open('${link}','_blank')">Télécharger</a>`
                     console.log('onclick are set')
                 }
@@ -273,6 +336,7 @@ if (window.location.toString().includes('tirexo')) {
 
             const episodes = bArray.filter(el => el.innerText.includes('Episode'))
             const maxEp = Math.max(...episodes.map(el => el.innerText.replaceAll(/[a-zA-Z!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/g, "").trim()))
+            const cover = document.querySelector('.xfieldimage').src
 
             let finalArray = [];
 
@@ -286,7 +350,7 @@ if (window.location.toString().includes('tirexo')) {
                         finalArray.push(bArray[j])
 
                         let anchor = bArray[j].innerHTML
-                        let link = anchor.substring(anchor.indexOf('https'), anchor.indexOf('>') - 1)
+                        let link = `${anchor.substring(anchor.indexOf('https'), anchor.indexOf('>') - 1)}#${cover}`
                         bArray[j].innerHTML = `<a href="#" onclick="window.open('${link}','_blank')">Episode ${count}</a>`
                         count += 1
                     }

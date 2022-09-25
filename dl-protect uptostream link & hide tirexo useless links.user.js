@@ -5,7 +5,7 @@
 // @icon        https://i.ibb.co/MNg7Q8v/Sans-titre-1-1.png
 // @match       https://dl-protect.info/*
 // @match       https://www.tirexo.*/*
-// @version     2.9
+// @version     3.0
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into content
@@ -78,7 +78,7 @@ if (window.location.toString().includes('protect')) {
               background: #1c1c1c;
           }
 
-          .amigo, footer, .grecaptcha-badge {
+          .amigo, footer, .grecaptcha-badge, body > div.container > div:nth-child(1) > div > center > a > img {
               display: none !important;
           }
 
@@ -225,8 +225,6 @@ if (window.location.toString().includes('protect')) {
 
                 }, 1000)
             }
-
-
 
         } else {
             console.log('waiting for the captcha to be resolved')

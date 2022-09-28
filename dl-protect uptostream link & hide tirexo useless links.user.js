@@ -5,19 +5,19 @@
 // @icon        https://i.ibb.co/MNg7Q8v/Sans-titre-1-1.png
 // @match       https://dl-protect.info/*
 // @match       https://www.tirexo.*/*
-// @version     3.0
+// @version     3.1
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into content
 // @description Purges the list of tirexo links to display only uptobox links and automates the DL-protect process
 // ==/UserScript==
 
-function getRidOfShit() {
+function getRidOfAds() {
     setTimeout(() => {
-        const shits = document.querySelectorAll('script')
-        shits.forEach(shit => {
-            if (shit.src.includes('jywigigu') || shit.src.includes('ads') || shit.src.includes('fauxtitters') || shit.src.includes('stats') || shit.src.includes('betzapdoson') || shit.hasAttribute('data-cfasync')) {
-                shit.remove()
+        const scripts = document.querySelectorAll('script')
+        scripts.forEach(el => {
+            if (el.src.includes('jywigigu') || el.src.includes('ads') || el.src.includes('fauxtitters') || el.src.includes('stats') || el.src.includes('betzapdoson') || el.hasAttribute('data-cfasync')) {
+                el.remove()
             }
         })
 
@@ -31,8 +31,8 @@ function getRidOfShit() {
         if (document.querySelectorAll('center')) {
             const center = document.querySelectorAll('center')
             center.forEach(el => {
-                if (document.querySelector('div.container:nth-child(2) > div:nth-child(1) > div:nth-child(1) > center:nth-child(1) > a:nth-child(2)')) {
-                    document.querySelector('div.container:nth-child(2) > div:nth-child(1) > div:nth-child(1) > center:nth-child(1) > a:nth-child(2)').remove()
+                if (el === document.querySelector('div.container:nth-child(2) > div:nth-child(1) > div:nth-child(1) > center:nth-child(1) > a:nth-child(2)')) {
+                    el.remove()
                 }
             })
         }
@@ -50,15 +50,17 @@ if (window.location.toString().includes('protect')) {
         document.querySelectorAll('.row')[1].after(gif)
         gif.innerHTML = '<img src=""  class="giphy-embed" allowFullScreen></img>'
         document.querySelector('.gif img').src = cover
-        //gif.innerHTML = '<img src="https://i.giphy.com/media/yziuK6WtDFMly/giphy.webp"  class="giphy-embed" allowFullScreen></img>'
     }
 
-    //window.onload = () => {
+    function checkCoverAndClick() {
+        if (window.location.href.indexOf("#") > -1) addGif()
+        setTimeout(() => { document.querySelector('.g-recaptcha').click() }, 800)
+    }
 
     document.getElementsByTagName("h1")[0].innerText = "Your Uptostream link is generating"
     document.getElementsByTagName("p")[0].innerText = "thanks for waiting, have a nice day !"
 
-    // cleaning HTML of some unwanted shit.
+    // cleaning HTML of some unwanted el via CSS.
     let style =
         `
           body {
@@ -80,6 +82,10 @@ if (window.location.toString().includes('protect')) {
 
           .amigo, footer, .grecaptcha-badge, body > div.container > div:nth-child(1) > div > center > a > img {
               display: none !important;
+          }
+
+          #protected-container > div:nth-child(1) > div:nth-child(1) > center:nth-child(1) {
+              height: 50px;
           }
 
           h3 {
@@ -157,81 +163,36 @@ if (window.location.toString().includes('protect')) {
               display: none;
               }
           }
-
           `
     GM_addStyle(style);
-    getRidOfShit()
+    getRidOfAds()
 
     if (document.querySelector('.g-recaptcha')) {
-
-        if (window.location.href.indexOf("#") > -1) {
-            addGif()
-        }
-        setTimeout(() => {
-            document.querySelector('.g-recaptcha').dispatchEvent(new Event("submit"));
-        }, 800)
-
+        checkCoverAndClick()
     } else {
 
         const body = document.querySelector('body')
         const mutationObserver = new MutationObserver(mutations => {
 
-            console.log(mutations)
-
             if (document.querySelector('.g-recaptcha')) {
-                mutationObserver.disconnect();
-                addGif()
-                setTimeout(() => {
-                    document.querySelector('.g-recaptcha').dispatchEvent(new Event("submit"));
-                }, 800)
 
+                mutationObserver.disconnect();
+                checkCoverAndClick()
+
+            } else if (document.querySelector('#protected-container')) {
+
+                mutationObserver.disconnect();
+                let link = document.querySelector('.col-md-12 > ul:nth-child(1) > li:nth-child(1) > a:nth-child(1)');
+
+                if (link.href.includes("uptobox")) {
+                    // replace uptobox link by uptostream link
+                    link.href = link.href.replace('uptobox', 'uptostream');
+                    link.click()
+                }
             }
         })
-        mutationObserver.observe(body, { childList: true, subtree: true })
-
+        mutationObserver.observe(body, { childList: true })
     }
-
-    // div that contains uptobox link after validate button is clicked and/or captcha is resolved.
-    //const div = document.querySelector('div.container:nth-child(3)')
-
-    // each second check if div that contains uptobox link has been added into HTML by website's script.
-    let zeparti = setInterval(() => {
-
-        if (document.querySelector('#protected-container')) {
-
-            let link = document.querySelector('.col-md-12 > ul:nth-child(1) > li:nth-child(1) > a:nth-child(1)');
-
-            if (link.href.includes("uptobox")) {
-                // replace uptobox link by uptostream link then clear interval
-                link.href = link.href.replace('uptobox', 'uptostream');
-                link.innerText = link.href.replace('uptobox', 'uptostream');
-                clearInterval(zeparti);
-
-                // check if uptobox link has been replaced by uptostream. As soon it's done, open it in a new tab, then clear interval.
-                const openLink = setInterval(() => {
-
-                    let checkOpen = false
-
-                    if (link.href.includes('uptostream')) {
-
-                        /*window.open(link.href, '_self')*/
-                        window.open(link.href, '_blank', 'noopener')
-                        checkOpen = true
-                    }
-                    if (checkOpen) {
-                        clearInterval(openLink)
-                        window.close();
-                    }
-
-                }, 1000)
-            }
-
-        } else {
-            console.log('waiting for the captcha to be resolved')
-        }
-
-    }, 500);
-    //}
 }
 
 //-----------------------------------------------------------------------------------------------TIREXO----------------------------------------------------------------------------------
@@ -239,7 +200,7 @@ if (window.location.toString().includes('protect')) {
 // cleanUp home page
 if (window.location.toString().includes('tirexo')) {
 
-    getRidOfShit()
+    getRidOfAds()
 
     // Regroup COMMON movies-series VARIABLES & CleanUp movies and series COMMON elements
     if (window.location.toString().includes('film') || window.location.toString().includes('serie')) {
@@ -311,8 +272,8 @@ if (window.location.toString().includes('tirexo')) {
                     // replace anchor.href by onclick method so that the dl-protect tab can open uptostream on itself after the script execution is done.
                     let anchor = bArray[i + 1].innerHTML
                     let link = `${anchor.substring(anchor.indexOf('https'), anchor.indexOf('>') - 1)}#${cover}`
-                    bArray[i + 1].innerHTML = `<a href="#" onclick="window.open('${link}','_blank')">Télécharger</a>`
-                    console.log('onclick are set')
+                    bArray[i + 1].firstElementChild.href = link
+
                 }
 
             }
@@ -349,7 +310,7 @@ if (window.location.toString().includes('tirexo')) {
 
                         let anchor = bArray[j].innerHTML
                         let link = `${anchor.substring(anchor.indexOf('https'), anchor.indexOf('>') - 1)}#${cover}`
-                        bArray[j].innerHTML = `<a href="#" onclick="window.open('${link}','_blank')">Episode ${count}</a>`
+                        bArray[j].innerHTML = `<a rel="external nofollow" target="_blank" href="${link}">Episode ${count}</a>`
                         count += 1
                     }
                 }

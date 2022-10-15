@@ -5,18 +5,19 @@
 // @icon        https://i.ibb.co/MNg7Q8v/Sans-titre-1-1.png
 // @match       https://dl-protect.info/*
 // @match       https://www.tirexo.*/*
-// @version     3.1
+// @version     3.3
 // @author      Jansen
 // @grant       GM_addStyle
-// @inject-into content
+// @inject-into auto
 // @description Purges the list of tirexo links to display only uptobox links and automates the DL-protect process
 // ==/UserScript==
+
 
 function getRidOfAds() {
     setTimeout(() => {
         const scripts = document.querySelectorAll('script')
         scripts.forEach(el => {
-            if (el.src.includes('jywigigu') || el.src.includes('ads') || el.src.includes('fauxtitters') || el.src.includes('stats') || el.src.includes('betzapdoson') || el.hasAttribute('data-cfasync')) {
+            if (el.src.includes('jywigigu') || el.src.includes('ads') || el.src.includes('fauxtitters') || el.src.includes('thaudray') || el.src.includes('stats') || el.src.includes('betzapdoson') || el.hasAttribute('data-cfasync')) {
                 el.remove()
             }
         })
@@ -28,33 +29,68 @@ function getRidOfAds() {
             })
         }
 
-        if (document.querySelectorAll('center')) {
-            const center = document.querySelectorAll('center')
-            center.forEach(el => {
-                if (el === document.querySelector('div.container:nth-child(2) > div:nth-child(1) > div:nth-child(1) > center:nth-child(1) > a:nth-child(2)')) {
-                    el.remove()
-                }
-            })
+        if (document.querySelector('center')) {
+            document.querySelector('center > a').remove()
         }
-    }, 500)
+
+        const iframes = document.querySelectorAll('iframe')
+
+        iframes.forEach(el => {
+            if (el.src.includes('rsationhesa') || el.src.includes('awayfterth')) {
+                el.remove()
+            }
+        })
+
+        const links = document.querySelectorAll('link')
+
+        links.forEach(el => {
+            if (el.href.includes('rsationhesa') || el.href.includes('ywasnothyc') || el.href.includes('naleapprength') || el.rel.includes('preconnect')) {
+                el.remove()
+            }
+        })
+
+    }, 100)
 }
+
 
 //--------------------------------------dl-protect----------------------------------------
 
 if (window.location.toString().includes('protect')) {
 
-    function addGif() {
-        const cover = window.location.toString().split('#').at(-1)
-        const gif = document.createElement('div')
-        gif.setAttribute('class', 'gif')
-        document.querySelectorAll('.row')[1].after(gif)
-        gif.innerHTML = '<img src=""  class="giphy-embed" allowFullScreen></img>'
-        document.querySelector('.gif img').src = cover
+
+    function addCover() {
+        const coverUrl = `https://www.tirexo.blue/img/${window.location.href.split('?')[2]}.jpg`
+        const cover = document.createElement('div')
+        cover.setAttribute('class', 'cover')
+        document.querySelectorAll('.row')[1].after(cover)
+        cover.innerHTML = '<img src="" allowFullScreen></img>'
+        document.querySelector('.cover img').src = coverUrl
     }
 
     function checkCoverAndClick() {
-        if (window.location.href.indexOf("#") > -1) addGif()
-        setTimeout(() => { document.querySelector('.g-recaptcha').click() }, 800)
+        // If url contains a hash, display file's cover
+        if (window.location.href.indexOf("films") > -1 || window.location.href.indexOf("series") > -1) addCover()
+
+        // Auto click on validate button then check if captcha is asked by observing it's visibility, if yes, reload the page 3 times, if captcha still asked, user has to solve it.
+        setTimeout(() => {
+
+            //document.querySelector('.g-recaptcha').click()
+            document.querySelector('.g-recaptcha').dispatchEvent(new Event("submit"))
+
+            const body = document.querySelector('body')
+            const mutationObserver = new MutationObserver(mutations => {
+
+                console.log(mutations)
+
+                if (document.querySelector('body > div:nth-child(10)').getAttribute('style').includes('visible') && [...window.location.toString()].filter(el => el === "?").length <= 4) {
+                    mutationObserver.disconnect();
+                    window.location = window.location + '?';
+                    //window.location.reload();
+                }
+            })
+            mutationObserver.observe(body, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] })
+
+        }, 800)
     }
 
     document.getElementsByTagName("h1")[0].innerText = "Your Uptostream link is generating"
@@ -70,10 +106,7 @@ if (window.location.toString().includes('protect')) {
           .navbar-default {
               background-color: #1c1c1c;
               border-color: #333;
-          }
-
-          div.container:nth-child(2) > div:nth-child(1) > div:nth-child(1) > center:nth-child(1) > h3:nth-child(1) {
-              margin-top: 5px;
+              margin-bottom: 0;
           }
 
           .row {
@@ -114,18 +147,14 @@ if (window.location.toString().includes('protect')) {
               background: #3d4244;
           }
 
-          .gif {
+          .cover {
               width: 75%;
               height: auto;
               margin: auto;
               padding-top: 15px;
           }
 
-          iframe.giphy-embed {
-              width: 100%;
-          }
-
-          .gif img {
+          .cover img {
               display: block;
               width: 100%;
               height: auto;
@@ -141,10 +170,6 @@ if (window.location.toString().includes('protect')) {
               filter: grayscale(100%);
           }
 
-          body > div:nth-child(8) > div:nth-child(2) {
-              position: fixed !important;
-              top: 120px !important;
-          }
 
           .form-control-static {
               min-height: 0px;
@@ -158,12 +183,21 @@ if (window.location.toString().includes('protect')) {
               width: 100%;
           }
 
+          body > div:nth-child(10) {
+              position: unset !important;
+          }
+
+          body > div:nth-child(10) > div:nth-child(2) {
+              top: 175px !important;
+          }
+
           @media (max-width: 800px) {
               #logo > img:nth-child(1) {
               display: none;
               }
           }
           `
+
     GM_addStyle(style);
     getRidOfAds()
 
@@ -187,7 +221,8 @@ if (window.location.toString().includes('protect')) {
                 if (link.href.includes("uptobox")) {
                     // replace uptobox link by uptostream link
                     link.href = link.href.replace('uptobox', 'uptostream');
-                    link.click()
+                    //link.click()
+                    window.location.href = link.href
                 }
             }
         })
@@ -198,7 +233,7 @@ if (window.location.toString().includes('protect')) {
 //-----------------------------------------------------------------------------------------------TIREXO----------------------------------------------------------------------------------
 
 // cleanUp home page
-if (window.location.toString().includes('tirexo')) {
+if (window.location.toString().includes('tirexo') && !window.location.toString().includes('dl-protect')) {
 
     getRidOfAds()
 
@@ -271,7 +306,7 @@ if (window.location.toString().includes('tirexo')) {
 
                     // replace anchor.href by onclick method so that the dl-protect tab can open uptostream on itself after the script execution is done.
                     let anchor = bArray[i + 1].innerHTML
-                    let link = `${anchor.substring(anchor.indexOf('https'), anchor.indexOf('>') - 1)}#${cover}`
+                    let link = `${anchor.substring(anchor.indexOf('https'), anchor.indexOf('>') - 1)}?${cover.substring(cover.indexOf('img') + 4, cover.indexOf('jpg') - 1)}`
                     bArray[i + 1].firstElementChild.href = link
 
                 }
@@ -309,7 +344,7 @@ if (window.location.toString().includes('tirexo')) {
                         finalArray.push(bArray[j])
 
                         let anchor = bArray[j].innerHTML
-                        let link = `${anchor.substring(anchor.indexOf('https'), anchor.indexOf('>') - 1)}#${cover}`
+                        let link = `${anchor.substring(anchor.indexOf('https'), anchor.indexOf('>') - 1)}?${cover.substring(cover.indexOf('img') + 4, cover.indexOf('jpg') - 1)}`
                         bArray[j].innerHTML = `<a rel="external nofollow" target="_blank" href="${link}">Episode ${count}</a>`
                         count += 1
                     }

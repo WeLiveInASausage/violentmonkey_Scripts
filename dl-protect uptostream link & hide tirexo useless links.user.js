@@ -5,11 +5,11 @@
 // @icon        https://i.ibb.co/MNg7Q8v/Sans-titre-1-1.png
 // @match       https://dl-protect.info/*
 // @match       https://www.tirexo.*/*
-// @version     3.3
+// @version     3.4
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto
-// @description Purges the list of tirexo links to display only uptobox links and automates the DL-protect process
+// @description Last update : 18/10/2022 - 14:24:52. Purges the list of tirexo links to display only uptobox links and automates the DL-protect process
 // ==/UserScript==
 
 
@@ -58,6 +58,7 @@ function getRidOfAds() {
 if (window.location.toString().includes('protect')) {
 
 
+    //Add cover from tirexo movie's/serie's page
     function addCover() {
         const coverUrl = `https://www.tirexo.blue/img/${window.location.href.split('?')[2]}.jpg`
         const cover = document.createElement('div')
@@ -68,21 +69,23 @@ if (window.location.toString().includes('protect')) {
     }
 
     function checkCoverAndClick() {
-        // If url contains a hash, display file's cover
+        // If url contains a "films" or "series", display file's cover
         if (window.location.href.indexOf("films") > -1 || window.location.href.indexOf("series") > -1) addCover()
 
-        // Auto click on validate button then check if captcha is asked by observing it's visibility, if yes, reload the page 3 times, if captcha still asked, user has to solve it.
+        // Auto click on validate button then check if captcha is asked.
         setTimeout(() => {
 
             //document.querySelector('.g-recaptcha').click()
             document.querySelector('.g-recaptcha').dispatchEvent(new Event("submit"))
 
+            //observe hidden captcha div to get if it's attribute style switch to visible, meaning captcha is asked, if yes, add questionmark to url (which causes the page to reload) to a maximum of 3 times
+            // giving 3 chances of bypassing it.
             const body = document.querySelector('body')
             const mutationObserver = new MutationObserver(mutations => {
 
-                console.log(mutations)
+                //console.log(mutations)
 
-                if (document.querySelector('body > div:nth-child(10)').getAttribute('style').includes('visible') && [...window.location.toString()].filter(el => el === "?").length <= 4) {
+                if (document.querySelector('footer').nextElementSibling.getAttribute('style').includes('visible') && [...window.location.toString()].filter(el => el === "?").length <= 4) {
                     mutationObserver.disconnect();
                     window.location = window.location + '?';
                     //window.location.reload();
@@ -183,11 +186,11 @@ if (window.location.toString().includes('protect')) {
               width: 100%;
           }
 
-          body > div:nth-child(10) {
+          footer + div {
               position: unset !important;
           }
 
-          body > div:nth-child(10) > div:nth-child(2) {
+          footer + div > div:last-child {
               top: 175px !important;
           }
 

@@ -5,7 +5,7 @@
 // @icon        https://i.ibb.co/MNg7Q8v/Sans-titre-1-1.png
 // @match       https://dl-protect.info/*
 // @match       https://www.tirexo.*/*
-// @version     3.5
+// @version     3.6
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto
@@ -76,7 +76,7 @@ if (window.location.toString().includes('protect')) {
         setTimeout(() => {
 
             //document.querySelector('.g-recaptcha').click()
-            //document.querySelector('.g-recaptcha').dispatchEvent(new Event("submit"))
+            document.querySelector('.g-recaptcha').dispatchEvent(new Event("submit"))
 
             //observe hidden captcha div to get if it's attribute style switch to visible, meaning captcha is asked, if yes, add questionmark to url (which causes the page to reload) to a maximum of 3 times
             // giving 3 chances of bypassing it.

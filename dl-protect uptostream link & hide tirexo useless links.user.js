@@ -5,11 +5,11 @@
 // @icon        https://i.ibb.co/MNg7Q8v/Sans-titre-1-1.png
 // @match       https://dl-protect.info/*
 // @match       https://www.tirexo.*/*
-// @version     3.4
+// @version     3.5
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto
-// @description Last update : 18/10/2022 - 14:24:52. Purges the list of tirexo links to display only uptobox links and automates the DL-protect process
+// @description Last update : 18/10/2022 - 21:56:25. Purges the list of tirexo links to display only uptobox links and automates the DL-protect process
 // ==/UserScript==
 
 
@@ -76,7 +76,7 @@ if (window.location.toString().includes('protect')) {
         setTimeout(() => {
 
             //document.querySelector('.g-recaptcha').click()
-            document.querySelector('.g-recaptcha').dispatchEvent(new Event("submit"))
+            //document.querySelector('.g-recaptcha').dispatchEvent(new Event("submit"))
 
             //observe hidden captcha div to get if it's attribute style switch to visible, meaning captcha is asked, if yes, add questionmark to url (which causes the page to reload) to a maximum of 3 times
             // giving 3 chances of bypassing it.
@@ -103,7 +103,23 @@ if (window.location.toString().includes('protect')) {
     let style =
         `
           body {
-              background: #1c1c1c ! important;
+              /*background: #1c1c1c !important;*/
+              background: #1c1c1c url('https://cdn.suwalls.com/wallpapers/holidays/dark-halloween-pattern-49196-1920x1200.jpg') ! important;
+              background-size: cover;
+          }
+
+          #logo {
+              margin: 5px 0 0 16px !important;
+          }
+
+          #logo > img:nth-child(1) {
+             /*filter: grayscale(100%);*/
+             width: 80px;
+             content:url(https://gallery.yopriceville.com/var/resizes/Free-Clipart-Pictures/Halloween-PNG-Pictures/Black_Halloween_Pumpkin_PNG_Clipart.png?m=1597391505);
+          }
+
+          .container > .row > .col-sm-12 {
+              margin-top: 15px;
           }
 
           .navbar-default {
@@ -116,7 +132,7 @@ if (window.location.toString().includes('protect')) {
               background: #1c1c1c;
           }
 
-          .amigo, footer, .grecaptcha-badge, body > div.container > div:nth-child(1) > div > center > a > img {
+          .amigo, footer, .grecaptcha-badge, body > div.container > div:nth-child(1) > div > center > a > img, .row::after {
               display: none !important;
           }
 
@@ -168,11 +184,6 @@ if (window.location.toString().includes('protect')) {
               border-radius: 7px;
               margin-bottom: 15px;
           }
-
-          #logo > img:nth-child(1) {
-              filter: grayscale(100%);
-          }
-
 
           .form-control-static {
               min-height: 0px;

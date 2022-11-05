@@ -5,7 +5,7 @@
 // @icon        https://i.ibb.co/MNg7Q8v/Sans-titre-1-1.png
 // @match       https://dl-protect.info/*
 // @match       https://www.tirexo.*/*
-// @version     3.6
+// @version     3.7
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto
@@ -15,12 +15,6 @@
 
 function getRidOfAds() {
     setTimeout(() => {
-        const scripts = document.querySelectorAll('script')
-        scripts.forEach(el => {
-            if (el.src.includes('jywigigu') || el.src.includes('ads') || el.src.includes('fauxtitters') || el.src.includes('thaudray') || el.src.includes('stats') || el.src.includes('betzapdoson') || el.hasAttribute('data-cfasync')) {
-                el.remove()
-            }
-        })
 
         if (document.querySelectorAll('.amigo')) {
             const amigo = document.querySelectorAll('.amigo')
@@ -32,22 +26,6 @@ function getRidOfAds() {
         if (document.querySelector('center')) {
             document.querySelector('center > a').remove()
         }
-
-        const iframes = document.querySelectorAll('iframe')
-
-        iframes.forEach(el => {
-            if (el.src.includes('rsationhesa') || el.src.includes('awayfterth')) {
-                el.remove()
-            }
-        })
-
-        const links = document.querySelectorAll('link')
-
-        links.forEach(el => {
-            if (el.href.includes('rsationhesa') || el.href.includes('ywasnothyc') || el.href.includes('naleapprength') || el.rel.includes('preconnect')) {
-                el.remove()
-            }
-        })
 
     }, 100)
 }
@@ -104,8 +82,8 @@ if (window.location.toString().includes('protect')) {
         `
           body {
               /*background: #1c1c1c !important;*/
-              background: #1c1c1c url('https://cdn.suwalls.com/wallpapers/holidays/dark-halloween-pattern-49196-1920x1200.jpg') ! important;
-              background-size: cover;
+              background: #1c1c1c url('https://images.rawpixel.com/image_1000/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm0yOC1icmljay1hb20tMTkxXzIuanBn.jpg') ! important;
+              background-size: cover !important;
           }
 
           #logo {
@@ -115,7 +93,7 @@ if (window.location.toString().includes('protect')) {
           #logo > img:nth-child(1) {
              /*filter: grayscale(100%);*/
              width: 80px;
-             content:url(https://gallery.yopriceville.com/var/resizes/Free-Clipart-Pictures/Halloween-PNG-Pictures/Black_Halloween_Pumpkin_PNG_Clipart.png?m=1597391505);
+             content:url(https://pics.clipartpng.com/midle/Autumn_Leaf_PNG_Clip_Art-2012.png);
           }
 
           .container > .row > .col-sm-12 {

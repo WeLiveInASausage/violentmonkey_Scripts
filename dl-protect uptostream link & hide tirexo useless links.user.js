@@ -5,11 +5,11 @@
 // @icon        https://i.ibb.co/MNg7Q8v/Sans-titre-1-1.png
 // @match       https://dl-protect.*/*
 // @match       https://www.tirexo.*/*
-// @version     3.7.1
+// @version     3.7.2
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto
-// @description Last update : 08/11/2022 - 01:52:44. Purges the list of tirexo links to display only uptobox links and automates the DL-protect process
+// @description Last update : 18/10/2022 - 21:56:25. Purges the list of tirexo links to display only uptobox links and automates the DL-protect process
 // ==/UserScript==
 
 
@@ -53,26 +53,24 @@ if (window.location.toString().includes('protect')) {
         // Auto click on validate button then check if captcha is asked.
         setTimeout(() => {
 
-            //document.querySelector('.g-recaptcha').click()
-            //document.querySelector('.g-recaptcha').dispatchEvent(new Event("submit"))
-            document.querySelector('#myForm').dispatchEvent(new Event("submit"))
+            document.querySelector('#myForm').dispatchEvent(new Event("submit")) // for firefox
+            document.querySelector('#subButton').click() // for chromium browsers
 
+      //----------------------------------------------------------------------------------------------------------------------------------------
             //observe hidden captcha div to get if it's attribute style switch to visible, meaning captcha is asked, if yes, add questionmark to url (which causes the page to reload) to a maximum of 3 times
             // giving 3 chances of bypassing it.
-            const body = document.querySelector('body')
+           /* const body = document.querySelector('body')
             const mutationObserver = new MutationObserver(mutations => {
-
-                //console.log(mutations)
 
                 if (document.querySelector('footer').nextElementSibling.getAttribute('style').includes('visible') && [...window.location.toString()].filter(el => el === "?").length <= 4) {
                     mutationObserver.disconnect();
                     window.location = window.location + '?';
-                    //window.location.reload();
                 }
             })
-            mutationObserver.observe(body, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] })
-
+            mutationObserver.observe(body, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] })*/
+      //----------------------------------------------------------------------------------------------------------------------------------------
         }, 800)
+
     }
 
     document.getElementsByTagName("h1")[0].innerText = "Your Uptostream link is generating"
@@ -206,7 +204,6 @@ if (window.location.toString().includes('protect')) {
                 //console.log(mutations[0].addedNodes[0].nodeValue)
 
              if(mutations[0].addedNodes[0].nodeValue == "Continuer") {
-                console.log('oui')
                checkCoverAndClick()
 
               }
@@ -371,3 +368,12 @@ if (window.location.toString().includes('tirexo') && !window.location.toString()
         }
     }
 }
+// ==UserScript==
+// @name        New script - tirexo.blue
+// @namespace   Violentmonkey Scripts
+// @match       https://www.tirexo.blue/
+// @grant       none
+// @version     1.0
+// @author      -
+// @description 08/11/2022 02:00:10
+// ==/UserScript==

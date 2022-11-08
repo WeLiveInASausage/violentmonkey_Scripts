@@ -5,30 +5,13 @@
 // @icon        https://i.ibb.co/MNg7Q8v/Sans-titre-1-1.png
 // @match       https://dl-protect.*/*
 // @match       https://www.tirexo.*/*
-// @version     3.7.2
+// @version     3.7.3
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto
-// @description Last update : 18/10/2022 - 21:56:25. Purges the list of tirexo links to display only uptobox links and automates the DL-protect process
+// @description Last update : 08/11/2022 - 22:46:32. Purges the list of tirexo links to display only uptobox links and automates the DL-protect process
 // ==/UserScript==
 
-
-function getRidOfAds() {
-    setTimeout(() => {
-
-        if (document.querySelectorAll('.amigo')) {
-            const amigo = document.querySelectorAll('.amigo')
-            amigo.forEach(el => {
-                el.remove()
-            })
-        }
-
-        if (document.querySelector('center')) {
-            document.querySelector('center > a').remove()
-        }
-
-    }, 100)
-}
 
 
 //--------------------------------------dl-protect----------------------------------------
@@ -56,19 +39,6 @@ if (window.location.toString().includes('protect')) {
             document.querySelector('#myForm').dispatchEvent(new Event("submit")) // for firefox
             document.querySelector('#subButton').click() // for chromium browsers
 
-      //----------------------------------------------------------------------------------------------------------------------------------------
-            //observe hidden captcha div to get if it's attribute style switch to visible, meaning captcha is asked, if yes, add questionmark to url (which causes the page to reload) to a maximum of 3 times
-            // giving 3 chances of bypassing it.
-           /* const body = document.querySelector('body')
-            const mutationObserver = new MutationObserver(mutations => {
-
-                if (document.querySelector('footer').nextElementSibling.getAttribute('style').includes('visible') && [...window.location.toString()].filter(el => el === "?").length <= 4) {
-                    mutationObserver.disconnect();
-                    window.location = window.location + '?';
-                }
-            })
-            mutationObserver.observe(body, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] })*/
-      //----------------------------------------------------------------------------------------------------------------------------------------
         }, 800)
 
     }
@@ -188,39 +158,44 @@ if (window.location.toString().includes('protect')) {
               }
           }
 
+          .cf-turnstile {
+              position: relative !important;
+              width: 100% !important;
+              height: 100% !important;
+              display: flex !important;
+              justify-content: center !important;
+          }
+
           iframe[title~="Cloudflare"] {
-              display: none;
+              display: block !important;
+              position: relative !important;
+              bottom: 15px !important;
+              border-radius: 32px !important;
           }
           `
 
     GM_addStyle(style);
-    getRidOfAds()
 
-    if (typeof document.querySelectorAll('.col-sm-12.text-center')[1] != 'undefined' && document.querySelectorAll('.col-sm-12.text-center')[1] != null){
+    if (typeof document.querySelectorAll('.col-sm-12.text-center')[1] != 'undefined' && document.querySelectorAll('.col-sm-12.text-center')[1] != null) {
 
-              const divToObserve = document.querySelectorAll('.col-sm-12.text-center')[1]
-            const mutationObserver = new MutationObserver(mutations => {
+        const divToObserve = document.querySelectorAll('.col-sm-12.text-center')[1]
+        const mutationObserver = new MutationObserver(mutations => {
 
-                //console.log(mutations[0].addedNodes[0].nodeValue)
+            //console.log(mutations)
 
-             if(mutations[0].addedNodes[0].nodeValue == "Continuer") {
-               checkCoverAndClick()
+            if (mutations[0].addedNodes[0].nodeValue == "Continuer") {
+                checkCoverAndClick()
 
-              }
+            }
+        })
+        mutationObserver.observe(divToObserve, { childList: true, characterData: true, subtree: true })
 
-            })
-            mutationObserver.observe(divToObserve, { childList: true,characterData: true, subtree: true})
     } else {
 
         const body = document.querySelector('body')
         const mutationObserver = new MutationObserver(mutations => {
 
-            if (document.querySelector('.g-recaptcha')) {
-
-                mutationObserver.disconnect();
-                checkCoverAndClick()
-
-            } else if (document.querySelector('#protected-container')) {
+            if (document.querySelector('#protected-container')) {
 
                 mutationObserver.disconnect();
                 let link = document.querySelector('.col-md-12 > ul:nth-child(1) > li:nth-child(1) > a:nth-child(1)');
@@ -228,7 +203,6 @@ if (window.location.toString().includes('protect')) {
                 if (link.href.includes("uptobox")) {
                     // replace uptobox link by uptostream link
                     link.href = link.href.replace('uptobox', 'uptostream');
-                    //link.click()
                     window.location.href = link.href
                 }
             }
@@ -239,10 +213,9 @@ if (window.location.toString().includes('protect')) {
 
 //-----------------------------------------------------------------------------------------------TIREXO----------------------------------------------------------------------------------
 
-// cleanUp home page
+
 if (window.location.toString().includes('tirexo') && !window.location.toString().includes('dl-protect')) {
 
-    getRidOfAds()
 
     // Regroup COMMON movies-series VARIABLES & CleanUp movies and series COMMON elements
     if (window.location.toString().includes('film') || window.location.toString().includes('serie')) {
@@ -368,12 +341,3 @@ if (window.location.toString().includes('tirexo') && !window.location.toString()
         }
     }
 }
-// ==UserScript==
-// @name        New script - tirexo.blue
-// @namespace   Violentmonkey Scripts
-// @match       https://www.tirexo.blue/
-// @grant       none
-// @version     1.0
-// @author      -
-// @description 08/11/2022 02:00:10
-// ==/UserScript==

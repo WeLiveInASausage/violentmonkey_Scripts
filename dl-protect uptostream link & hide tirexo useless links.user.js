@@ -3,13 +3,13 @@
 // @namespace   https://github.com/WeLiveInASausage/violentmonkey_Scripts
 // @downloadURL https://raw.githubusercontent.com/WeLiveInASausage/violentmonkey_Scripts/main/dl-protect%20uptostream%20link%20%26%20hide%20tirexo%20useless%20links.user.js
 // @icon        https://i.ibb.co/MNg7Q8v/Sans-titre-1-1.png
-// @match       https://dl-protect.info/*
+// @match       https://dl-protect.*/*
 // @match       https://www.tirexo.*/*
-// @version     3.7
+// @version     3.7.1
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto
-// @description Last update : 18/10/2022 - 21:56:25. Purges the list of tirexo links to display only uptobox links and automates the DL-protect process
+// @description Last update : 08/11/2022 - 01:52:44. Purges the list of tirexo links to display only uptobox links and automates the DL-protect process
 // ==/UserScript==
 
 
@@ -54,7 +54,8 @@ if (window.location.toString().includes('protect')) {
         setTimeout(() => {
 
             //document.querySelector('.g-recaptcha').click()
-            document.querySelector('.g-recaptcha').dispatchEvent(new Event("submit"))
+            //document.querySelector('.g-recaptcha').dispatchEvent(new Event("submit"))
+            document.querySelector('#myForm').dispatchEvent(new Event("submit"))
 
             //observe hidden captcha div to get if it's attribute style switch to visible, meaning captcha is asked, if yes, add questionmark to url (which causes the page to reload) to a maximum of 3 times
             // giving 3 chances of bypassing it.
@@ -127,7 +128,7 @@ if (window.location.toString().includes('protect')) {
               border: 1px solid #484848 !important;
           }
 
-          .g-recaptcha {
+          #subButton {
               color: white;
               padding: 10px 20px;
               background: #363a3c;
@@ -188,13 +189,30 @@ if (window.location.toString().includes('protect')) {
               display: none;
               }
           }
+
+          iframe[title~="Cloudflare"] {
+              display: none;
+          }
           `
 
     GM_addStyle(style);
     getRidOfAds()
 
-    if (document.querySelector('.g-recaptcha')) {
-        checkCoverAndClick()
+    if (typeof document.querySelectorAll('.col-sm-12.text-center')[1] != 'undefined' && document.querySelectorAll('.col-sm-12.text-center')[1] != null){
+
+              const divToObserve = document.querySelectorAll('.col-sm-12.text-center')[1]
+            const mutationObserver = new MutationObserver(mutations => {
+
+                //console.log(mutations[0].addedNodes[0].nodeValue)
+
+             if(mutations[0].addedNodes[0].nodeValue == "Continuer") {
+                console.log('oui')
+               checkCoverAndClick()
+
+              }
+
+            })
+            mutationObserver.observe(divToObserve, { childList: true,characterData: true, subtree: true})
     } else {
 
         const body = document.querySelector('body')

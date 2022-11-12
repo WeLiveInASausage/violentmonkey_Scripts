@@ -5,11 +5,11 @@
 // @icon        https://i.ibb.co/MNg7Q8v/Sans-titre-1-1.png
 // @match       https://dl-protect.*/*
 // @match       https://www.tirexo.*/*
-// @version     3.7.3
+// @version     3.7.4
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto
-// @description Last update : 08/11/2022 - 22:46:32. Purges the list of tirexo links to display only uptobox links and automates the DL-protect process
+// @description Last update : 012/11/2022 - 18:41:15. Purges the list of tirexo links to display only uptobox links and automates the DL-protect process
 // ==/UserScript==
 
 
@@ -36,8 +36,7 @@ if (window.location.toString().includes('protect')) {
         // Auto click on validate button then check if captcha is asked.
         setTimeout(() => {
 
-            document.querySelector('#myForm').dispatchEvent(new Event("submit")) // for firefox
-            document.querySelector('#subButton').click() // for chromium browsers
+            document.querySelector('#myForm').submit()
 
         }, 800)
 
@@ -171,6 +170,18 @@ if (window.location.toString().includes('protect')) {
               position: relative !important;
               bottom: 15px !important;
               border-radius: 32px !important;
+          }
+
+          #my-custom-span {
+            width: 25px;
+            height: 25px;
+            position: absolute;
+            background: red;
+            top: 7px;
+            left: 325px;
+            border-radius: 12px;
+            pointer-events: none;
+            z-index: 1;
           }
           `
 

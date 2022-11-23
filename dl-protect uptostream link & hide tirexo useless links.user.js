@@ -5,11 +5,11 @@
 // @icon        https://i.ibb.co/MNg7Q8v/Sans-titre-1-1.png
 // @match       https://dl-protect.*/*
 // @match       https://www.tirexo.*/*
-// @version     3.7.4
+// @version     3.7.5
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto
-// @description Last update : 012/11/2022 - 18:41:15. Purges the list of tirexo links to display only uptobox links and automates the DL-protect process
+// @description Last update : 23/11/2022 - 09:34:58. Purges the list of tirexo links to display only uptobox links and automates the DL-protect process
 // ==/UserScript==
 
 
@@ -21,7 +21,7 @@ if (window.location.toString().includes('protect')) {
 
     //Add cover from tirexo movie's/serie's page
     function addCover() {
-        const coverUrl = `https://www.tirexo.blue/img/${window.location.href.split('?')[2]}.jpg`
+        const coverUrl = `https://www.tirexo.tel/img/${window.location.href.split('?')[2]}.jpg`
         const cover = document.createElement('div')
         cover.setAttribute('class', 'cover')
         document.querySelectorAll('.row')[1].after(cover)
@@ -50,7 +50,7 @@ if (window.location.toString().includes('protect')) {
         `
           body {
               /*background: #1c1c1c !important;*/
-              background: #1c1c1c url('https://images.rawpixel.com/image_1000/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm0yOC1icmljay1hb20tMTkxXzIuanBn.jpg') ! important;
+              background: #1c1c1c url('https://img5.goodfon.com/original/1920x1080/4/6c/ukrasheniia-snezhinki-rozhdestvo-novyi-god-christmas-shishki.jpg') ! important;
               background-size: cover !important;
           }
 
@@ -61,7 +61,7 @@ if (window.location.toString().includes('protect')) {
           #logo > img:nth-child(1) {
              /*filter: grayscale(100%);*/
              width: 80px;
-             content:url(https://pics.clipartpng.com/midle/Autumn_Leaf_PNG_Clip_Art-2012.png);
+             content:url(https://www.pngplay.com/wp-content/uploads/5/Golden-Bell-Christmas-PNG.png);
           }
 
           .container > .row > .col-sm-12 {

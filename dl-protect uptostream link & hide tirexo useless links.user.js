@@ -5,7 +5,7 @@
 // @icon        https://i.ibb.co/MNg7Q8v/Sans-titre-1-1.png
 // @match       https://dl-protect.*/*
 // @match       https://www.tirexo.*/*
-// @version     3.7.5
+// @version     3.7.6
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto
@@ -21,7 +21,7 @@ if (window.location.toString().includes('protect')) {
 
     //Add cover from tirexo movie's/serie's page
     function addCover() {
-        const coverUrl = `https://www.tirexo.tel/img/${window.location.href.split('?')[2]}.jpg`
+        const coverUrl = window.location.href.split('?')[2]
         const cover = document.createElement('div')
         cover.setAttribute('class', 'cover')
         document.querySelectorAll('.row')[1].after(cover)
@@ -297,7 +297,7 @@ if (window.location.toString().includes('tirexo') && !window.location.toString()
 
                     // replace anchor.href by onclick method so that the dl-protect tab can open uptostream on itself after the script execution is done.
                     let anchor = bArray[i + 1].innerHTML
-                    let link = `${anchor.substring(anchor.indexOf('https'), anchor.indexOf('>') - 1)}?${cover.substring(cover.indexOf('img') + 4, cover.indexOf('jpg') - 1)}`
+                    let link = `${anchor.substring(anchor.indexOf('https'), anchor.indexOf('>') - 1)}?${cover}`
                     bArray[i + 1].firstElementChild.href = link
 
                 }
@@ -335,7 +335,7 @@ if (window.location.toString().includes('tirexo') && !window.location.toString()
                         finalArray.push(bArray[j])
 
                         let anchor = bArray[j].innerHTML
-                        let link = `${anchor.substring(anchor.indexOf('https'), anchor.indexOf('>') - 1)}?${cover.substring(cover.indexOf('img') + 4, cover.indexOf('jpg') - 1)}`
+                        let link = `${anchor.substring(anchor.indexOf('https'), anchor.indexOf('>') - 1)}?${cover}`
                         bArray[j].innerHTML = `<a rel="external nofollow" target="_blank" href="${link}">Episode ${count}</a>`
                         count += 1
                     }

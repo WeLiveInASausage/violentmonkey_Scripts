@@ -5,11 +5,11 @@
 // @icon        https://i.ibb.co/MNg7Q8v/Sans-titre-1-1.png
 // @match       https://dl-protect.*/*
 // @match       https://www.tirexo.*/*
-// @version     3.7.6
+// @version     3.7.7
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto
-// @description Last update : 23/11/2022 - 09:34:58. Purges the list of tirexo links to display only uptobox links and automates the DL-protect process
+// @description Last update : 27/11/2022 - 12:36:42. Purges the list of tirexo links to display only uptobox links and automates the DL-protect process
 // ==/UserScript==
 
 
@@ -50,7 +50,7 @@ if (window.location.toString().includes('protect')) {
         `
           body {
               /*background: #1c1c1c !important;*/
-              background: #1c1c1c url('https://img5.goodfon.com/original/1920x1080/4/6c/ukrasheniia-snezhinki-rozhdestvo-novyi-god-christmas-shishki.jpg') ! important;
+              background: #1c1c1c url('https://img.freepik.com/free-photo/minimalistic-christmas-flat-lay_1220-4823.jpg?w=1920&t=st=1669548720~exp=1669549320~hmac=58a911bd88d81a11a70f997a27abb47ad97e3e9eeb9022f53dca0f94036161a5') ! important;
               background-size: cover !important;
           }
 

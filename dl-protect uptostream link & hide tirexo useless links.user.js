@@ -5,7 +5,7 @@
 // @icon        https://i.ibb.co/MNg7Q8v/Sans-titre-1-1.png
 // @match       https://dl-protect.*/*
 // @match       https://www.tirexo.*/*
-// @version     3.7.7
+// @version     3.7.8
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto
@@ -50,7 +50,7 @@ if (window.location.toString().includes('protect')) {
         `
           body {
               /*background: #1c1c1c !important;*/
-              background: #1c1c1c url('https://img.freepik.com/free-photo/minimalistic-christmas-flat-lay_1220-4823.jpg?w=1920&t=st=1669548720~exp=1669549320~hmac=58a911bd88d81a11a70f997a27abb47ad97e3e9eeb9022f53dca0f94036161a5') ! important;
+              background: #1c1c1c url('https://www.drmazarakis.com/wp-content/uploads/minimalistic-christmas-flat-lay-1980x1320.jpg') ! important;
               background-size: cover !important;
           }
 

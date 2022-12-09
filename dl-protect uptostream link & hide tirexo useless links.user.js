@@ -6,7 +6,7 @@
 // @match       https://dl-protect.*/*
 // @match       https://www.tirexo.*/*
 // @match       https://uptostream.com/*
-// @version     3.7.9
+// @version     3.8.0
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto

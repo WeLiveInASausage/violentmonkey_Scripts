@@ -5,11 +5,12 @@
 // @icon        https://i.ibb.co/MNg7Q8v/Sans-titre-1-1.png
 // @match       https://dl-protect.*/*
 // @match       https://www.tirexo.*/*
-// @version     3.7.8
+// @match       https://uptostream.com/*
+// @version     3.7.9
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto
-// @description Last update : 27/11/2022 - 12:36:42. Purges the list of tirexo links to display only uptobox links and automates the DL-protect process
+// @description Last update : 09/12/2022 - 23:01:55. Purges the list of tirexo links to display only uptobox links and automates the DL-protect process + NEW UPTOSTREAM STYLE !!!
 // ==/UserScript==
 
 
@@ -351,4 +352,116 @@ if (window.location.toString().includes('tirexo') && !window.location.toString()
             }
         }
     }
+}
+
+//------------------------------------------------------------------------Uptobox restyle-------------------------------------------------------------------------
+
+if (window.location.toString().includes('uptostream')) {
+
+    let wallpaper = "https://w.wallhaven.cc/full/9m/wallhaven-9mw39w.jpg"
+
+    let uptoStreamStyle =
+        `
+    body {
+        background: #131313 url("${wallpaper}")!important;
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
+        background-position: center !important;
+        min-width: 570px;
+    }
+
+    #navbar {
+        background-color: #1e1e1e !important;
+    }
+
+    #content-wrapper {
+        background-image: unset !important;
+    }
+
+    #content {
+    width: 100% !important;
+    }
+
+    #topBar, #extraInfos .title, #shortcuts, #qrcode, #extraInfos .code_embed, #footer, .recap-links label:last-child {
+        display: none !important;
+    }
+
+
+    .file-title, .recap-links, .mt-4 {
+        text-align: center !important;
+    }
+
+    .file-title {
+        font-size: 28px;
+        margin-top: 75px;
+        color: white !important;
+    }
+
+    #videoContainer {
+        position: unset !important;
+        z-index: unset !important;
+        min-height: 320px !important;
+        height: unset !important;
+        /*display: unset !important;*/
+        background: unset !important;
+        width: unset !important;
+        margin: 0 auto;
+        transition: unset !important;
+        min-width: 555px !important;
+        max-width: 1000px !important;
+        border: 6px solid #1a1a1a;
+        border-radius: 5px;
+    }
+
+    #hls-player {
+      width: 100%; unset !important;
+      height: 100%; unset !important;
+    }
+
+    #player {
+      width: 100%; unset !important;
+      height: 100%; unset !important;
+    }
+
+    video {
+      position: unset !important;
+      top: unset !important;
+      left: unset !important;
+      width: 100%;
+      height: 100%;
+      padding: 4% 0 8% 0 !important;
+}
+    }
+
+    #content > div {
+        padding-top: unset !important;
+    }
+
+    #hls-video {
+        padding-top: unset !important;
+        padding-bottom: unset !important;
+    }
+
+    .fake-player-uts {
+        padding-bottom: 56.25%;
+    }
+
+    .button-wrapper, .download {
+        margin-bottom: unset !important;
+    }
+
+    #user-status-premium {
+        margin-top: 25px !important;
+        background-color: #1d1d1d75 !important;
+    }
+
+    .successBox {
+        background-color: #1d1d1d75 !important;
+    }
+
+    .little-gray-txt {
+        color: #c8c8c8 !important;
+    }
+  `
+    GM_addStyle(uptoStreamStyle);
 }

@@ -6,7 +6,7 @@
 // @match       https://dl-protect.*/*
 // @match       https://www.tirexo.*/*
 // @match       https://uptostream.com/*
-// @version     3.8.0
+// @version     3.8.1
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto
@@ -421,6 +421,7 @@ if (window.location.toString().includes('uptostream')) {
     #player {
       width: 100%; unset !important;
       height: 100%; unset !important;
+      padding: 4% 0 !important;
     }
 
     video {
@@ -429,8 +430,6 @@ if (window.location.toString().includes('uptostream')) {
       left: unset !important;
       width: 100%;
       height: 100%;
-      /*padding: 4% 0 8% 0 !important;*/
-}
     }
 
     #content > div {

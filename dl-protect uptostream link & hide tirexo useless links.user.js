@@ -6,11 +6,11 @@
 // @match       https://dl-protect.*/*
 // @match       https://www.tirexo.*/*
 // @match       https://uptostream.com/*
-// @version     3.8.3
+// @version     3.8.4
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto
-// @description Last update : 09/12/2022 - 23:24:55. Purges the list of tirexo links to display only uptobox links and automates the DL-protect process + NEW UPTOSTREAM STYLE !!!
+// @description Last update : 10/12/2022 - 21:23:36. Purges the list of tirexo links to display only uptobox links and automates the DL-protect process + NEW UPTOSTREAM STYLE !!!
 // ==/UserScript==
 
 
@@ -358,16 +358,17 @@ if (window.location.toString().includes('tirexo') && !window.location.toString()
 
 if (window.location.toString().includes('uptostream')) {
 
-    let wallpaper="https://w.wallhaven.cc/full/9m/wallhaven-9mw39w.jpg"
+    let wallpaper = "https://w.wallhaven.cc/full/9m/wallhaven-9mw39w.jpg"
 
-    let uptoStreamStyle=
-        
+    let uptoStreamStyle =
+
         ` body {
             background: #131313 url("${wallpaper}") !important;
             background-repeat: no-repeat !important;
             background-size: cover !important;
             background-position: center !important;
             min-width: 570px;
+            overflow-x: hiden !important;
         }
 
         #navbar {
@@ -418,6 +419,7 @@ if (window.location.toString().includes('uptostream')) {
             max-width: 1000px !important;
             border: 6px solid #1a1a1a;
             border-radius: 5px;
+            box-shadow: 15px 15px 20px rgba(0,0,0,0.2) , -15px 0px 20px rgba(0,0,0,0.2);
         }
 
         #hls-player {
@@ -458,6 +460,7 @@ if (window.location.toString().includes('uptostream')) {
 
         .fake-player-uts {
             padding-bottom: 56.25%;
+            background-size: cover;
         }
 
         .button-wrapper,
@@ -468,6 +471,15 @@ if (window.location.toString().includes('uptostream')) {
         #user-status-premium {
             margin-top: 25px !important;
             background-color: #1d1d1d75 !important;
+            /*color: #b7ff69 !important;*/
+            /*border: 1px solid #a8ffc2 !important;*/
+            color: #008abf !important;
+            border: 1px solid #135d73 !important;
+        }
+
+      .big-button-green {
+	          background: #1d8ab5 !important;
+	          box-shadow: 0 6px #00719d,0 10px 3px #0000004d !important;
         }
 
         .successBox {
@@ -477,6 +489,7 @@ if (window.location.toString().includes('uptostream')) {
         .little-gray-txt {
             color: #c8c8c8 !important;
         }
-    ` 
+    `
     GM_addStyle(uptoStreamStyle);
+
 }

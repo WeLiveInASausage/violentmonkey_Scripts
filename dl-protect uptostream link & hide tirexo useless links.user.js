@@ -6,11 +6,11 @@
 // @match       https://dl-protect.*/*
 // @match       https://www.tirexo.*/*
 // @match       https://uptostream.com/*
-// @version     3.8.4
+// @version     3.8.5
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto
-// @description Last update : 10/12/2022 - 21:23:36. Purges the list of tirexo links to display only uptobox links and automates the DL-protect process + NEW UPTOSTREAM STYLE !!!
+// @description Last update : 30/12/2022 - 14:23:36. Purges the list of tirexo links to display only uptobox links and automates the DL-protect process + NEW UPTOSTREAM STYLE !!!
 // ==/UserScript==
 
 
@@ -364,11 +364,11 @@ if (window.location.toString().includes('uptostream')) {
 
         ` body {
             background: #131313 url("${wallpaper}") !important;
-            background-repeat: no-repeat !important;
+            background-repeat: repeat !important;
             background-size: cover !important;
             background-position: center !important;
             min-width: 570px;
-            overflow-x: hiden !important;
+            overflow-x: hidden !important;
         }
 
         #navbar {

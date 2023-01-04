@@ -6,11 +6,11 @@
 // @match       https://dl-protect.*/*
 // @match       https://www.tirexo.*/*
 // @match       https://uptostream.com/*
-// @version     3.8.5
+// @version     3.8.6
 // @author      Jansen
 // @grant       GM_addStyle
 // @inject-into auto
-// @description Last update : 30/12/2022 - 14:23:36. Purges the list of tirexo links to display only uptobox links and automates the DL-protect process + NEW UPTOSTREAM STYLE !!!
+// @description Last update : 04/01/2023 - 17:12:49. Purges the list of tirexo links to display only uptobox links and automates the DL-protect process + NEW UPTOSTREAM STYLE !!!
 // ==/UserScript==
 
 
@@ -51,8 +51,12 @@ if (window.location.toString().includes('protect')) {
         `
           body {
               /*background: #1c1c1c !important;*/
-              background: #1c1c1c url('https://www.drmazarakis.com/wp-content/uploads/minimalistic-christmas-flat-lay-1980x1320.jpg') ! important;
+              background: #1c1c1c url('https://wallpaper.dog/large/10881763.jpg') ! important;
               background-size: cover !important;
+          }
+
+          .header {
+              background: linear-gradient(0deg, rgb(23, 23, 23) 50%, rgb(32, 32, 32) 100%) ! important;
           }
 
           #logo {
@@ -62,7 +66,7 @@ if (window.location.toString().includes('protect')) {
           #logo > img:nth-child(1) {
              /*filter: grayscale(100%);*/
              width: 80px;
-             content:url(https://www.pngplay.com/wp-content/uploads/5/Golden-Bell-Christmas-PNG.png);
+             content:url('https://i.ibb.co/cvW4W2R/dl.png');
           }
 
           .container > .row > .col-sm-12 {
@@ -71,7 +75,7 @@ if (window.location.toString().includes('protect')) {
 
           .navbar-default {
               background-color: #1c1c1c;
-              border-color: #333;
+              border-color: #3330;
               margin-bottom: 0;
           }
 
